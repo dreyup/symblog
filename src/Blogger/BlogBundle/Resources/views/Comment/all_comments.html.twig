@@ -1,0 +1,40 @@
+{% extends '::admin.layout.html.twig' %}
+
+{% block body %}
+    <h1>Comment list</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User</th>
+                <th>Comment</th>
+                <th>Approved</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for comment in comments %}
+            <tr>
+                <td><a href="{{ path('comment_show', { 'id': comment.id }) }}">{{ comment.id }}</a></td>
+                <td>{{ comment.user }}</td>
+                <td>{{ comment.comment }}</td>
+                <td>{% if comment.approved %}Yes{% else %}No{% endif %}</td>
+                <td>{% if comment.created %}{{ comment.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if comment.updated %}{{ comment.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <a href="{{ path('comment_edit', { 'id': comment.id }) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('comment_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

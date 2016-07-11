@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
+    <title>{% block title %}Symblog | Admin panel{% endblock %} - Symblog</title>
+
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="{{ asset('js/jquery.magnific-popup.js') }}"></script>
+
+    {% block stylesheets %}
+        <link href='http://fonts.googleapis.com/css?family=Irish+Grover' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{{ asset('css/magnific-popup.css')}}" type='text/css'>
+        <link href="{{ asset('css/screen.css') }}" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+
+<section id="wrapper">
+    <header id="header">
+        <div class="top">
+            {% block navigation %}
+                <nav>
+
+                    <ul class="navigation">
+                        <li><a href="{{ path('BloggerBlogBundle_homepage') }}">To Site</a></li>
+                        <li><a href="{{ path('blog_index') }}">Posts</a></li>
+                        <li><a href="{{ path('user_index') }}">Users</a></li>
+                        <li><a href="{{ path('comment_index') }}">Comments</a></li>
+
+                        {% block user %}
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                                <a href="{{ path('fos_user_security_logout') }}">
+                                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                </a>
+                            {% else %}
+                                <a class="ajax-popup-link" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                            {% endif %}
+                        {% endblock %}
+
+                    </ul>
+                </nav>
+            {% endblock %}
+        </div>
+
+        <a href="{{ path('blog_index') }}"><h2>ADMIN PANEL</h2></a>
+
+    </header>
+
+    {% block body %}
+    {% endblock %}
+
+    <div id="footer" >
+        {% block footer %}
+            Symfony2 blog tutorial - created by <a href="https://github.com/dsyph3r">dsyph3r</a>
+        {% endblock %}
+    </div>
+</section>
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            $('.ajax-popup-link').magnificPopup({
+                type: 'ajax',
+                modal: true,
+                showCloseBtn: true
+            });
+        });
+    </script>
+{% endblock %}
+</body>
+</html>

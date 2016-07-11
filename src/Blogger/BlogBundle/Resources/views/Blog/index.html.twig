@@ -1,0 +1,45 @@
+{% extends '::admin.layout.html.twig' %}
+
+{% block body %}
+    <h1>Blog list</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Blog</th>
+                <th>Image</th>
+                <th>Tags</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for blog in blogs %}
+            <tr>
+                <td>{{ blog.id }}</td>
+                <td>{{ blog.title }}</td>
+                <td>{{ blog.author }}</td>
+                <td>{{ blog.blog }}</td>
+                <td><img src="{{ asset(['images/', blog.image]|join) }}" alt="" style="width: 100px"></td>
+                <td>{{ blog.tags }}</td>
+                <td>{% if blog.created %}{{ blog.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if blog.updated %}{{ blog.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <a href="{{ path('blog_edit', { 'id': blog.id }) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    {#<a href="{{ path('blog_delete', { 'id': blog.id }) }}"><span class="glyphicon glyphicon-trash"></span></a>#}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('blog_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

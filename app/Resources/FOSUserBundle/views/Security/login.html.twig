@@ -1,0 +1,60 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+    <div style="margin: 0 auto; width:500px; height: 500px; background-color: white; border-radius: 3px">
+
+        <div class="pull-right"><h3><a href="#" class="popup-modal-dismiss glyphicon glyphicon-remove" style="text-decoration: none; margin-right: 20px"></a></h3></div>
+
+        <div style="padding: 30px 30px">
+
+            <h3>Please Log In, or <a href="{{ path('fos_user_registration_register') }}" class="popup-link">Sign Up</a></h3>
+
+            <form action="{{ path('fos_user_security_check') }}" method="POST" class="fos_user_login">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                <div class="form-group">
+                    <label for="inputUsernameEmail">Username or email</label>
+                    <input type="text" id="inputUsernameEmail" name="_username" value="{{ last_username }}" required="required" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <a class="pull-right" href="#">Forgot password?</a>
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" name="_password" required="required" />
+                </div>
+                <div class="checkbox pull-right">
+                    <label>
+                        <input type="checkbox">
+                        Remember me </label>
+                </div>
+                <button type="submit" class="btn btn btn-primary">
+                    Log In
+                </button>
+            </form>
+
+            {% if error %}
+                <div class="label label-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <script>
+        $(document).ready(function(){
+            $('.popup-link').magnificPopup({
+                type: 'ajax',
+                modal: true,
+                showCloseBtn: true
+            });
+        });
+        $(document).on('click', '.popup-modal-dismiss', function (e) {
+            e.preventDefault();
+            $.magnificPopup.close();
+        });
+    </script>
+
+{% endblock fos_user_content %}
+

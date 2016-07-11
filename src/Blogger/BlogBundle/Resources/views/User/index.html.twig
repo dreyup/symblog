@@ -1,0 +1,37 @@
+{% extends '::admin.layout.html.twig' %}
+
+{% block body %}
+    <h1>User list</h1>
+
+    <table class="table table-striped">
+        <thead class="row">
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Last login</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.last_login|date('Y-m-d H:i:s') }}</td>
+                <td>
+                    <a href="{{ path('user_edit', { 'id': user.id }) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    {#<a href="{{ path('user_delete', { 'id': user.id }) }}"><span class="glyphicon glyphicon-trash"></span></a>#}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('user_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
