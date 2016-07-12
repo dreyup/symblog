@@ -5,11 +5,16 @@ namespace Blogger\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Expose;
+
 
 /**
  * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Entity\Repository\BlogRepository")
  * @ORM\Table(name="blog")
  * @ORM\HasLifecycleCallbacks()
+ * @ExclusionPolicy("all")
  */
 class Blog
 {
@@ -38,6 +43,7 @@ class Blog
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Exclude
      */
     protected $id;
 
@@ -48,16 +54,19 @@ class Blog
 
     /**
      * @ORM\Column(type="string")
+     * @Expose
      */
     protected $title;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Expose
      */
     protected $author;
 
     /**
      * @ORM\Column(type="text")
+     * @Expose
      */
     protected $blog;
 
@@ -68,12 +77,14 @@ class Blog
 
     /**
      * @ORM\Column(type="text")
+     * @Expose
      */
     protected $tags;
 
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="blog")
+     * 
      */
     protected $comments;
 

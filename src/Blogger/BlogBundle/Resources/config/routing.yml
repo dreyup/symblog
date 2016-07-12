@@ -52,5 +52,15 @@ BloggerBlogBundle_comment_create:
         methods:  POST
         blog_id: \d+
 
+BloggerBlogBundle_user_users:
+  type: rest
+  resource: "@BloggerBlogBundle/Controller/UsersApiController.php"
+  prefix: /api/v1
+
+BloggerBlogBundle_blog_posts:
+  type: rest
+  resource: "@BloggerBlogBundle/Controller/BlogApiController.php"
+  prefix: /api/v1
+
 
 
