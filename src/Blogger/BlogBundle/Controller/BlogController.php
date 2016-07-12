@@ -2,6 +2,8 @@
 
 namespace Blogger\BlogBundle\Controller;
 
+use Blogger\BlogBundle\Entity\UploadImage;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -88,20 +90,24 @@ class BlogController extends Controller
         $editForm = $this->createForm('Blogger\BlogBundle\Form\BlogType', $blog);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted())
+        {
             $uploaded_file = $editForm['image']->getData();
-            if ($uploaded_file)
-            {
+            if ($uploaded_file) {
                 $image = BlogType::processImage($uploaded_file, $blog);
+                if (isset ($image['error'])) $editForm->addError(new FormError($image['error']));
                 $blog->setImage($image);
             }
+            
+            if ($editForm->isValid()) {
+                
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($blog);
+                $em->flush();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($blog);
-            $em->flush();
-
-            return $this->redirectToRoute('blog_edit', array('id' => $blog->getId()));
-        }
+                return $this->redirectToRoute('blog_edit', array('id' => $blog->getId()));
+            }
+        } 
 
         return $this->render('BloggerBlogBundle:Blog:edit.html.twig', array(
             'blog' => $blog,

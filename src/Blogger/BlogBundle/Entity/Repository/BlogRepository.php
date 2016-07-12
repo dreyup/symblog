@@ -72,15 +72,4 @@ class BlogRepository extends \Doctrine\ORM\EntityRepository
         return $tagWeights;
     }
 
-
-    public function getDropdownAuthors()
-    {
-        $qb = $this->createQueryBuilder('fos_user')
-            ->select('id,username')
-            ->where('enabled = 1');
-
-        return $qb->getQuery()
-            ->getResult();
-    }
-
 }
