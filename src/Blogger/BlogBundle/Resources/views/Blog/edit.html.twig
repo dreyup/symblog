@@ -6,7 +6,12 @@
     <br>
 
     {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
+    {{ form_row(edit_form.title) }}
+    {{ form_row(edit_form.author) }}
+    {{ form_row(edit_form.blog) }}
+    {{ form_row(edit_form.image) }}
+    <img src="{{ asset(['images/', edit_form.vars.value.image]|join) }}"/>
+    {{ form_row(edit_form.tags) }}
         <input class="btn btn-success" type="submit" value="Edit" />
     {{ form_end(edit_form) }}
 
