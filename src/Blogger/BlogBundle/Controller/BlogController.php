@@ -133,6 +133,11 @@ class BlogController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $comments = $em->getRepository('BloggerBlogBundle:Comment')->findBy(['blog'=>$blog->getId()]);
+            foreach ($comments as $comment) {
+                $em->remove($comment);
+                $em->flush();
+            }
             $em->remove($blog);
             $em->flush();
         }
