@@ -37,6 +37,8 @@ class CommentController extends Controller
         $comment->setBlog($blog);
         $form   = $this->createForm(CommentType::class, $comment);
 
+        $this->get('session')->getFlashBag()->add('blogger-notice', 'Comment was created');
+
         return $this->render('BloggerBlogBundle:Comment:form.html.twig', array(
             'comment' => $comment,
             'form'   => $form->createView()
@@ -57,6 +59,8 @@ class CommentController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('blogger-notice', 'Comment was created');
 
             return $this->redirectToRoute('comment_show', array('id' => $comment->getId()));
         }
@@ -96,6 +100,8 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('blogger-notice', 'Comment was updated');
+
             return $this->redirectToRoute('comment_edit', array('id' => $comment->getId()));
         }
 
@@ -119,6 +125,8 @@ class CommentController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($comment);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('blogger-notice', 'Comment was deleted');
         }
 
         return $this->redirectToRoute('comment_index');
@@ -157,6 +165,7 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('blogger-notice', 'Comment was created');
 
             return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
                     'id'    => $comment->getBlog()->getId(),

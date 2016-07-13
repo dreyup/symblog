@@ -44,6 +44,8 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('blogger-notice', 'User was created');
+
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
 
@@ -82,6 +84,8 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('blogger-notice', 'User was updated');
+
             return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
         }
 
@@ -105,6 +109,8 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('blogger-notice', 'User was deleted');
         }
 
         return $this->redirectToRoute('user_index');

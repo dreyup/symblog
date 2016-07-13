@@ -3,6 +3,12 @@
 {% block body %}
     <h1 xmlns="http://www.w3.org/1999/html">Blog edit</h1>
 
+    {% for flashMessage in app.session.flashbag.get('blogger-notice') %}
+        <div class="blogger-notice">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
     <br>
 
     {{ form_start(edit_form) }}

@@ -46,6 +46,8 @@ class BlogController extends Controller
             $em->persist($blog);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('blogger-notice', 'Post was created');
+
             return $this->redirectToRoute('blog_show', array('id' => $blog->getId()));
         }
 
@@ -111,6 +113,8 @@ class BlogController extends Controller
                 $em->persist($blog);
                 $em->flush();
 
+                $this->get('session')->getFlashBag()->add('blogger-notice', 'Post was updated');
+
                 return $this->redirectToRoute('blog_edit', array('id' => $blog->getId()));
             }
         }
@@ -140,6 +144,8 @@ class BlogController extends Controller
             }
             $em->remove($blog);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('blogger-notice', 'Post was deleted');
         }
 
         return $this->redirectToRoute('blog_index');
