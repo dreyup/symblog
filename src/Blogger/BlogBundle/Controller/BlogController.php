@@ -42,13 +42,25 @@ class BlogController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $uploaded_file = $form['image']->getData();
+            if ($uploaded_file) {
+                $image = BlogType::processImage($uploaded_file, $blog);
+
+                if (isset ($image['error'])) {
+                    $form->addError(new FormError($image['error']));
+                } else {
+                    $blog->setImage($image);
+                }
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($blog);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('blogger-notice', 'Post was created');
 
-            return $this->redirectToRoute('blog_show', array('id' => $blog->getId()));
+            return $this->redirectToRoute('blog_index');
         }
 
         return $this->render('BloggerBlogBundle:Blog:new.html.twig', array(
@@ -103,8 +115,6 @@ class BlogController extends Controller
                 } else {
                     $blog->setImage($image);
                 }
-
-                
             }
             
             if ($editForm->isValid()) {
