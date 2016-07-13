@@ -95,8 +95,14 @@ class BlogController extends Controller
             $uploaded_file = $editForm['image']->getData();
             if ($uploaded_file) {
                 $image = BlogType::processImage($uploaded_file, $blog);
-                if (isset ($image['error'])) $editForm->addError(new FormError($image['error']));
-                $blog->setImage($image);
+
+                if (isset ($image['error'])) {
+                    $editForm->addError(new FormError($image['error']));
+                } else {
+                    $blog->setImage($image);
+                }
+
+                
             }
             
             if ($editForm->isValid()) {
@@ -107,7 +113,7 @@ class BlogController extends Controller
 
                 return $this->redirectToRoute('blog_edit', array('id' => $blog->getId()));
             }
-        } 
+        }
 
         return $this->render('BloggerBlogBundle:Blog:edit.html.twig', array(
             'blog' => $blog,
