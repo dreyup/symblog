@@ -146,10 +146,10 @@ class CommentController extends Controller
         $user = $this->getUser();
 
         $comment  = new Comment();
-        $comment->setBlog($blog);
-        $comment->setUser($user->getUsername());
         $form    = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+        $comment->setUser($user->getUsername());
+        $comment->setBlog($blog);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()

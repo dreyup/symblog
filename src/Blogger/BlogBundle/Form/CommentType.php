@@ -14,7 +14,16 @@ class CommentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('comment');
+        $builder
+            ->add('user', 'entity', array(
+                'class' => 'BloggerBlogBundle:User',
+                'property' => 'username',
+                'expanded' => false,
+                'multiple' => false
+            ))
+            ->add('comment')
+            ->add('blog')
+            ;
     }
 
     /**
