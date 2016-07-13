@@ -6,23 +6,35 @@
  * Time: 14:42
  */
 
-namespace Blogger\BlogBundle\Controller;
+namespace Blogger\ApiBundle\Controller;
 
 use Blogger\BlogBundle\Entity\Blog;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Class BlogApiController
- * @package Blogger\BlogBundle\Controller
+ * @package Blogger\ApiBundle\Controller
  */
 class BlogApiController extends FOSRestController
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @View(serializerGroups={"blog"})
+     * * @ApiDoc(
+     *  resource=true,
+     *  description="Get all posts",
+     *  headers={
+     *      {
+     *           "name"="Authorization",
+     *           "description"="Access-Token",
+     *           "required"=true
+     *      }
+     *  }
+     * )
      */
     public function getPostsAllAction()
     {
@@ -37,6 +49,25 @@ class BlogApiController extends FOSRestController
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      * @View(serializerGroups={"blog"})
+     * @ApiDoc(
+     *  description="Get post by id",
+     *  resource=true,
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Where get post by ID"
+     *      }
+     *  },
+     *  headers={
+     *      {
+     *           "name"="Authorization",
+     *           "description"="Access-Token",
+     *           "required"=true
+     *      }
+     *  }
+     * )
      */
     public function getPostAction($id)
     {

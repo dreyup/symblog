@@ -105,5 +105,16 @@ jms_serializer:
                 path: %kernel.root_dir%/config/serializer/FosUserBundle
         auto_detection: true
 
+nelmio_api_doc: ~
+
+fos_oauth_server:
+    db_driver:           orm
+    client_class:        Blogger\ApiBundle\Entity\Client
+    access_token_class:  Blogger\ApiBundle\Entity\AccessToken
+    refresh_token_class: Blogger\ApiBundle\Entity\RefreshToken
+    auth_code_class:     Blogger\ApiBundle\Entity\AuthCode
+    service:
+        user_provider: fos_user.user_manager
+
 
 

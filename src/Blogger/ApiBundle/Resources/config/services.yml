@@ -1,0 +1,4 @@
+services:
+#    blogger_api.example:
+#        class: Blogger\ApiBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
