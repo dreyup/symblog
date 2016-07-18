@@ -8,7 +8,7 @@
                 <h2><a href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog.id, 'slug': blog.slug }) }}">{{ blog.title }}</a></h2>
             </header>
 
-            <img src="{{ asset(['images/', blog.image]|join) }}" />
+            <a href="{{ asset(['images/', blog.image]|join) }}" class="image-popup-link" ><img src="{{ asset(['images/', blog.image]|join) }}" /></a>
             <div class="snippet">
                 <p>{{ blog.blog(500) }}</p>
                 <p class="continue"><a href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog.id, 'slug': blog.slug }) }}">Continue reading...</a></p>
@@ -23,4 +23,14 @@
     {% else %}
         <p>There are no blog entries for symblog</p>
     {% endfor %}
+
+    {% block javascripts %}
+        <script>
+            $(document).ready(function(){
+                $('.image-popup-link').magnificPopup({
+                    type: 'image',
+                });
+            });
+        </script>
+    {% endblock %}
 {% endblock %}
