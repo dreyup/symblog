@@ -25,6 +25,7 @@
     {% endfor %}
 
     {% block javascripts %}
+        {{ parent() }}
         <script>
             $(document).ready(function(){
                 $('.image-popup-link').magnificPopup({
